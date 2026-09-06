@@ -356,14 +356,14 @@ in group means fall within user-specified equivalence limits.</p>
 <h2>Example: Equivalence Among Vaccine Lots</h2>
 <p>An evaluation is conducted to determine whether three manufacturing
 lots of a vaccine produce equivalent immune responses. The outcome is
-the antibody concentration measured on the <span class="math inline">\(log_{10}\)</span> scale, assumed to follow a
-normal distribution with a standard deviation of 0.4.<br />
-Equivalence is declared if the confidence intervals for the ratio of all
-pairwise comparisons fall entirely within the range [2/3, 3/2].</p>
-<p>Since the analysis is conducted on the <span class="math inline">\(log_{10}\)</span> scale, the equivalence limits
+the antibody concentration measured on the <span class="math inline">\(\log_{10}\)</span> scale, assumed to follow a
+normal distribution with a standard deviation of 0.4. Equivalence is
+declared if the confidence intervals for the ratio of all pairwise
+comparisons fall entirely within the range [2/3, 3/2].</p>
+<p>Since the analysis is conducted on the <span class="math inline">\(\log_{10}\)</span> scale, the equivalence limits
 are transformed to <code>log10(2/3)</code> and
 <code>log10(3/2)</code>.</p>
-<p>A total of 1,000 trials is simulated with 172 subjects per group and
+<p>A total of 1,000 trials are simulated with 172 subjects per group and
 a 95% confidence level:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">sim_power_equivalence_normal</span>(</span>

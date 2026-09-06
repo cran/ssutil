@@ -1,6 +1,6 @@
 Package: ssutil
 Title: Sample Size Calculation Tools
-Version: 1.0.0
+Version: 1.1.0
 Authors@R: c(
   person(
     given = "John J.",
@@ -24,7 +24,6 @@ Description: Functions for sample size estimation and simulation in clinical
   Bechhofer, Santner, and Goldsman (1995, ISBN:978-0-471-57427-9).
 License: AGPL (>= 3)
 Encoding: UTF-8
-RoxygenNote: 7.3.2
 Depends: R (>= 4.1)
 Suggests: knitr, rmarkdown, spelling, testthat (>= 3.0.0)
 Language: en-US
@@ -34,11 +33,12 @@ VignetteBuilder: knitr
 URL: https://johnaponte.github.io/ssutil/,
         https://github.com/johnaponte/ssutil
 BugReports: https://github.com/johnaponte/ssutil/issues
+Config/roxygen2/version: 8.1.0
 NeedsCompilation: no
-Packaged: 2025-06-10 07:44:40 UTC; master
+Packaged: 2026-09-06 17:22:47 UTC; master
 Author: John J. Aponte [aut, cre] (ORCID:
     <https://orcid.org/0000-0002-3014-3673>),
   Chris Gast [ctb]
 Maintainer: John J. Aponte <john.j.aponte@gmail.com>
 Repository: CRAN
-Date/Publication: 2025-06-12 14:10:02 UTC
+Date/Publication: 2026-09-06 17:40:02 UTC

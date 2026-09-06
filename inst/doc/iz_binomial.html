@@ -12,7 +12,7 @@
 
 
 
-<title>Selecting the best group using the Indifferent-Zone approach for binomial outcomes</title>
+<title>Selecting the best group using the Indifference-Zone approach for binomial outcomes</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -338,36 +338,36 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 <h1 class="title toc-ignore">Selecting the best group using the
-Indifferent-Zone approach for binomial outcomes</h1>
+Indifference-Zone approach for binomial outcomes</h1>
 
 
 
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(ssutil)</span></code></pre></div>
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p>The indifferent-zone approach for binomial outcomes is a statistical
+<p>The indifference-zone approach for binomial outcomes is a statistical
 method designed to select the group with the highest event probability
 while ensuring that this selection is made correctly at a specified
 confidence level. This approach assumes that the difference in event
 probability between the best group and the next-best group exceeds a
-specified threshold, called the “indifferent zone”. This zone defines a
+specified threshold, called the “indifference zone”. This zone defines a
 margin of indifference, within which differences are considered
 negligible, allowing the decision process to focus only on differences
 that clearly exceed this margin.</p>
 <p>This package offers several functions to help with this design:</p>
 <p><code>power_best_binomial()</code> calculates the exact probability
 of correctly selecting the best group given the event probability in the
-best group (<code>p1</code>), the pre-specified indifferent-zone
+best group (<code>p1</code>), the pre-specified indifference-zone
 threshold (<code>dif</code>), the number of groups
 (<code>ngroups</code>), and the sample size per group
 (<code>npergroup</code>). This function is based on Sobel and Huyett
 (1957) under the least favorable configuration (i.e., assuming all other
 groups have an event probability equal to the best group’s probability
-minus the indifferent-zone threshold).</p>
+minus the indifference-zone threshold).</p>
 <p><code>ss_best_binomial()</code> estimates the required sample size
 per group to achieve a specified power for correctly selecting the best
 group, given the event probability in the best group (<code>p1</code>),
-the indifferent-zone threshold (<code>dif</code>), and the number of
+the indifference-zone threshold (<code>dif</code>), and the number of
 groups (<code>ngroups</code>).</p>
 <p><code>sim_power_best_binomial()</code> estimates the empirical power
 (i.e., the proportion of simulated trials in which the best group is
@@ -380,16 +380,16 @@ based on overall ranking across multiple outcomes rather than requiring
 top performance on every outcome.</p>
 <p><code>wcs_power_best_binomial()</code> searches for the probability
 in the best group that leads to the lowest power given a pre-specified
-indifferent-zone threshold (<code>dif</code>), the number of groups
+indifference-zone threshold (<code>dif</code>), the number of groups
 (<code>ngroups</code>), and the sample size per group
-(<code>npergroup</code>)</p>
+(<code>npergroup</code>).</p>
 </div>
 <div id="examples-with-a-single-outcome" class="section level2">
 <h2>Examples with a single outcome</h2>
 <ol style="list-style-type: decimal">
 <li>What is the probability of correctly selecting the best group in a
 trial with three groups of 30 participants each? Assume the best group
-has an event probability of 90% and the indifferent-zone threshold is
+has an event probability of 90% and the indifference-zone threshold is
 10%.</li>
 </ol>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">power_best_binomial</span>(<span class="at">p1 =</span> <span class="fl">0.9</span>, <span class="at">dif =</span> <span class="fl">0.1</span>, <span class="at">ngroups =</span> <span class="dv">3</span>, <span class="at">npergroup =</span> <span class="dv">30</span>)</span>
@@ -397,8 +397,8 @@ has an event probability of 90% and the indifferent-zone threshold is
 <ol start="2" style="list-style-type: decimal">
 <li>What is the sample size required per group to achieve 90% power for
 correctly selecting the best group among three groups, assuming the best
-group has an event probability of 90% and the indifferent-zone threshold
-is 10%.</li>
+group has an event probability of 90% and the indifference-zone
+threshold is 10%.</li>
 </ol>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">ss_best_binomial</span>(<span class="at">power =</span> <span class="fl">0.9</span>, <span class="at">p1 =</span> <span class="fl">0.9</span>, <span class="at">dif =</span> <span class="fl">0.1</span>, <span class="at">ngroups =</span> <span class="dv">3</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co">#&gt; [1] 64</span></span></code></pre></div>
@@ -406,7 +406,7 @@ is 10%.</li>
 <li>Using simulations, what is the probability of correctly selecting
 the best group in a trial with three groups of 30 participants each?
 Assume the best group has an event probability of 90% and the
-indifferent-zone threshold is 10%.</li>
+indifference-zone threshold is 10%.</li>
 </ol>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">sim_power_best_binomial</span>(</span>
@@ -448,16 +448,16 @@ the best overall rank among all groups.</p>
 greater importance to be assigned to some outcomes over others. For
 instance, if performance on the first two outcomes is twice as important
 as the third, weights such as <code>c(0.4, 0.4, 0.2)</code> can be
-specified. Weights are scaled internally to sum 1.</p>
+specified. Weights are scaled internally to sum to 1.</p>
 <p>The functions are flexible and allow specification of, for each
-outcome, the event probabilities, indifferent-zone thresholds, and group
-sample sizes.</p>
+outcome, the event probabilities, indifference-zone thresholds, and
+group sample sizes.</p>
 <ol style="list-style-type: decimal">
 <li>What is the probability that the best group is correctly identified
 as having the highest seroconversion rate across five antigens in a
 trial with three groups of 30 participants each? Assume the best group’s
-seroconversion rate is 80% and the indifferent-zone threshold is 10% for
-all outcomes.</li>
+seroconversion rate is 80% and the indifference-zone threshold is 10%
+for all outcomes.</li>
 </ol>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">sim_power_best_binomial</span>(</span>

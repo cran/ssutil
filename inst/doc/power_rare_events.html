@@ -12,7 +12,7 @@
 
 
 
-<title>Detectable Event Rate for Safety Signal Detection: Using power_single_rate</title>
+<title>Power for rare events</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -337,8 +337,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 
-<h1 class="title toc-ignore">Detectable Event Rate for Safety Signal
-Detection: Using <code>power_single_rate</code></h1>
+<h1 class="title toc-ignore">Power for rare events</h1>
 
 
 
@@ -352,18 +351,19 @@ power, what is the smallest event rate (proportion) that can be reliably
 detected (i.e., at least one event expected with a set
 probability)?</strong>”</p>
 </blockquote>
-<p>The function <code>power_single_rate()</code> addresses this by
-calculating the minimum true underlying proportion of an event needed,
-so that, with a specified sample size, there is a specified power to
-observe at least one event.</p>
-<p>This is typically used in clinical trial planning or post-marketing
-safety surveillance, where the event (such as a serious adverse
-reaction) is rare, but assuring a high probability to observe at least
-one event if the true rate is sufficiently high is crucial for safety
-oversight.</p>
+<p><code>power_single_rate()</code> answers this for a single event: the
+minimum true event rate needed for a given sample size and power to
+observe at least one event. <code>power_events_rate()</code> generalizes
+the question the other way around: <strong>given a sample size and an
+assumed event rate, what is the probability of observing at least 1, 2,
+3, … events?</strong></p>
+<p>Both are useful in clinical trial planning and post-marketing safety
+surveillance, where the event of interest (such as a serious adverse
+reaction) is rare, but assuring a high probability of observing it if
+the true rate is high enough is crucial for safety oversight.</p>
 </div>
-<div id="function" class="section level2">
-<h2>Function</h2>
+<div id="power_single_rate" class="section level2">
+<h2><code>power_single_rate()</code></h2>
 <p>The function signature is:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">power_single_rate</span>(subjects, power)</span></code></pre></div>
 <ul>
@@ -375,10 +375,7 @@ and 1.</li>
 with columns: - <code>n</code>: sample size, - <code>power</code>:
 statistical power, - <code>proportion</code>: minimum detectable event
 rate.</p>
-<p>A formatted print and summary are provided for nice displays.</p>
-</div>
-<div id="examples" class="section level2">
-<h2>Examples</h2>
+<p>A formatted print method is provided for readable output.</p>
 <div id="example-1-100-subjects-power-0.95" class="section level3">
 <h3>Example 1: 100 Subjects, Power 0.95</h3>
 <p>Suppose you want to know the lowest event rate that would provide a
@@ -391,8 +388,8 @@ rate.</p>
 <div id="example-2-30-subjects-power-0.95-0.90-and-0.8" class="section level3">
 <h3>Example 2: 30 Subjects, Power 0.95, 0.90, and 0.8</h3>
 <p>Suppose your sample size is 30, and you want to know what true event
-rate you can potentially detect (at least one event) with powers of 80%,
-90%, and 95%.</p>
+rate you can potentially detect (at least one event) with powers of 95%,
+90%, and 80%.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">power_single_rate</span>(<span class="dv">30</span>, <span class="fu">c</span>(<span class="fl">0.95</span>, <span class="fl">0.90</span>, <span class="fl">0.8</span>))</span></code></pre></div>
 <pre><code>## According to the number of participants, the table shows the power
 ## to detect at least one event, given a true event rate equal to or higher than:
@@ -403,6 +400,109 @@ rate you can potentially detect (at least one event) with powers of 80%,
 ## |       30 |   90% | 7.39 per 100 participants |
 ## |       30 |   80% | 5.22 per 100 participants |</code></pre>
 </div>
+<div id="example-3-500-and-1500-subjects" class="section level3">
+<h3>Example 3: 500 and 1500 Subjects</h3>
+<p>Larger safety databases are common more advanced phases of clinical
+development. With 500 and 1500 subjects, the minimum detectable event
+rate for 95% power is:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">power_single_rate</span>(<span class="fu">c</span>(<span class="dv">500</span>, <span class="dv">1500</span>), <span class="fl">0.95</span>)</span></code></pre></div>
+<pre><code>## According to the number of participants, the table shows the power
+## to detect at least one event, given a true event rate equal to or higher than:
+## 
+## | Subjects | Power |                 Proportion |
+## | -------- | ----- | -------------------------- |
+## |      500 |   95% | 5.97 per 1000 participants |
+## |     1500 |   95% | 2.02 per 1000 participants |</code></pre>
+</div>
+</div>
+<div id="power_events_rate" class="section level2">
+<h2><code>power_events_rate()</code></h2>
+<p><code>power_single_rate()</code> answers the “at least one event”
+case, and solves for the rate. As a complement, it is useful to go the
+other way: assume a known or suspected event rate, and ask for the
+probability of observing at least 1, 2, or more events. A natural set of
+rates to check against is the standard adverse-event frequency
+categories used in drug and vaccine labeling (EMA, 2009; CIOMS Working
+Groups III and V, 1999):</p>
+<table>
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Frequency</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Very common</td>
+<td>≥ 1/10</td>
+</tr>
+<tr class="even">
+<td>Common (frequent)</td>
+<td>≥ 1/100 to &lt; 1/10</td>
+</tr>
+<tr class="odd">
+<td>Uncommon</td>
+<td>≥ 1/1,000 to &lt; 1/100</td>
+</tr>
+<tr class="even">
+<td>Rare</td>
+<td>≥ 1/10,000 to &lt; 1/1,000</td>
+</tr>
+<tr class="odd">
+<td>Very rare</td>
+<td>&lt; 1/10,000</td>
+</tr>
+</tbody>
+</table>
+<p><code>power_events_rate()</code> computes the exact binomial
+probability of observing at least <code>e</code> events, for every
+combination of sample size (<code>n</code>) and risk
+(<code>r</code>):</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">power_events_rate</span>(n, r, e)</span></code></pre></div>
+<ul>
+<li><code>n</code>: Integer or vector. Sample size(s).</li>
+<li><code>r</code>: Numeric or vector. Risk(s) (per-subject event
+probability), between 0 and 1.</li>
+<li><code>e</code>: Integer or vector. Event count threshold(s), e.g. 1,
+2, 3.</li>
+</ul>
+<p>The function returns a matrix (class <code>power_events_rate</code>)
+with columns <code>N</code>, <code>Risk</code>, and one column per
+threshold in <code>e</code>.</p>
+<div id="example-4-500-and-1500-subjects-across-standard-frequency-categories" class="section level3">
+<h3>Example 4: 500 and 1500 Subjects Across Standard Frequency
+Categories</h3>
+<p>Using the boundary rate of each category above (1/10, 1/100, 1/1,000,
+1/10,000, and 1/100,000 to represent “very rare”), the probability of
+observing at least 1, 2, or 3 events with 500 or 1500 subjects is:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">power_events_rate</span>(<span class="fu">c</span>(<span class="dv">500</span>, <span class="dv">1500</span>), <span class="fu">c</span>(<span class="dv">1</span> <span class="sc">/</span> <span class="dv">10</span>, <span class="dv">1</span> <span class="sc">/</span> <span class="dv">100</span>, <span class="dv">1</span> <span class="sc">/</span> <span class="dv">1000</span>, <span class="dv">1</span> <span class="sc">/</span> <span class="dv">10000</span>, <span class="dv">1</span> <span class="sc">/</span> <span class="fl">1e5</span>), <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))</span></code></pre></div>
+<pre><code>## |    N |     Risk |     ≥1 |     ≥2 |     ≥3 |
+## | ---- | -------- | ------ | ------ | ------ |
+## |  500 |     1/10 | 100.0% | 100.0% | 100.0% |
+## |  500 |    1/100 |  99.3% |  96.0% |  87.7% |
+## |  500 |   1/1000 |  39.4% |   9.0% |   1.4% |
+## |  500 |  1/10000 |   4.9% |   0.1% |   0.0% |
+## |  500 | 1/100000 |   0.5% |   0.0% |   0.0% |
+## | 1500 |     1/10 | 100.0% | 100.0% | 100.0% |
+## | 1500 |    1/100 | 100.0% | 100.0% | 100.0% |
+## | 1500 |   1/1000 |  77.7% |  44.2% |  19.1% |
+## | 1500 |  1/10000 |  13.9% |   1.0% |   0.1% |
+## | 1500 | 1/100000 |   1.5% |   0.0% |   0.0% |</code></pre>
+<p>As the table shows, a safety database of 500 or 1500 subjects has a
+high probability of detecting at least one “common” or “very common”
+adverse event, but very limited power to detect “rare” or “very rare”
+events - illustrating why larger post-marketing exposure is needed to
+characterize infrequent risks.</p>
+</div>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+<p>European Medicines Agency. (2009). Section 4.8: Undesirable effects.
+<a href="https://www.ema.europa.eu/en/documents/presentation/presentation-section-48-undesirable-effects_en.pdf" class="uri">https://www.ema.europa.eu/en/documents/presentation/presentation-section-48-undesirable-effects_en.pdf</a></p>
+<p>CIOMS Working Groups III and V. (1999). Guidelines for Preparing Core
+Clinical-Safety Information on Drugs (2nd ed.). Council for
+International Organizations of Medical Sciences. ISBN 978-92-9036-070-4.
+<a href="https://cioms.ch/wp-content/uploads/2018/03/Guidelines-for-Preparing-Core-Clinical-Safety-Info-Drugs-Report-of-CIOMS-Working-Group-III-and-V.pdf" class="uri">https://cioms.ch/wp-content/uploads/2018/03/Guidelines-for-Preparing-Core-Clinical-Safety-Info-Drugs-Report-of-CIOMS-Working-Group-III-and-V.pdf</a></p>
 </div>
 
 
