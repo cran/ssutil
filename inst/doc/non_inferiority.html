@@ -361,7 +361,7 @@ non-inferiority of the immune response for a vaccine against 7
 serotypes? Non-inferiority is achieved if the geometric mean ratio
 between the candidate vaccine and the reference is greater than 0.5 for
 the first two antigens, and for three of the other five.</p>
-<p>This example simulates 1000 trials with 125 participants per group, 7
+<p>This example simulates 1000 trials with 500 participants per group, 7
 independent outcomes, a standard deviation of 0.8 on the log10 scale for
 all outcomes, and a common non-inferiority margin equivalent to
 log10(2/3). Non-inferiority is required in the first two outcomes, and
@@ -371,21 +371,21 @@ in at least three of the remaining five.</p>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">sim_power_ni_normal</span>(</span>
 <span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>  <span class="at">nsim =</span> <span class="dv">1000</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>  <span class="at">npergroup =</span> <span class="dv">125</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>  <span class="at">npergroup =</span> <span class="dv">500</span>,</span>
 <span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>  <span class="at">ntest =</span> <span class="dv">7</span>,</span>
 <span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>  <span class="at">ni_limit =</span> <span class="fu">log10</span>(<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>),</span>
 <span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>  <span class="at">test_req =</span> <span class="dv">2</span>,</span>
 <span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>  <span class="at">test_opt =</span> <span class="dv">3</span>,</span>
 <span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>  <span class="at">sd =</span> <span class="fl">0.8</span>,</span>
 <span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>  <span class="at">corr =</span> <span class="dv">0</span>,</span>
-<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>  <span class="at">t_level =</span> <span class="fl">0.05</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>  <span class="at">t_level =</span> <span class="fl">0.95</span></span>
 <span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>)</span>
 <span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a></span>
 <span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>res</span>
 <span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="co">#&gt; Empirical Power Result</span></span>
 <span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a><span class="co">#&gt; ----------------------- </span></span>
-<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="co">#&gt; Power:       0.9120</span></span>
-<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a><span class="co">#&gt; 95% CI:      [0.8927, 0.9288]</span></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="co">#&gt; Power:       0.8680</span></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a><span class="co">#&gt; 95% CI:      [0.8454, 0.8884]</span></span>
 <span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a><span class="co">#&gt; Simulations: 1000</span></span></code></pre></div>
 <p>The result shows the proportion of simulations in which the full
 non-inferiority rule was satisfied.</p>

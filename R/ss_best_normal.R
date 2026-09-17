@@ -38,8 +38,7 @@ ss_best_normal <- function(power, dif, sd, ngroups, seed = NULL) {
   stopifnot("power must be > 0 and < 1" = power > 0 && power < 1)
   if (!is.null(seed)) stopifnot("seed must be > 0" = seed > 0)
 
-  #ceiling(2 * (sd * multz(1 - power, ngroups - 1, 0.5, seed) / dif)^2)
-  2 * (sd * multz(1 - power, ngroups - 1, 0.5, seed) / dif)^2
+  ceiling(2 * (sd * multz(power, ngroups - 1, 0.5, seed = seed) / dif)^2)
 }
 
 
@@ -55,10 +54,10 @@ ss_best_normal <- function(power, dif, sd, ngroups, seed = NULL) {
 #' @param npergroup Integer. Number in each group.
 #' @param seed Optional. Integer seed to use in the internal call to \code{multp()}.
 #'
-#' @return Integer. Sample size required per group to achieve the specified power.
+#' @return Numeric. Probability of correctly selecting the best group.
 #'
 #' @note
-#' The function uses the quantile function \code{multp()}, which computes critical values
+#' The function uses \code{multp()}, which computes the joint cumulative distribution
 #' for the selection procedure. This implementation assumes equal variances and independent samples.
 #' @examples
 #' power_best_normal(dif = 0.5, sd = 1, ngroups = 3, npergroup = 11)
@@ -72,5 +71,5 @@ power_best_normal <- function(dif, sd, ngroups, npergroup, seed = NULL) {
   stopifnot("npergroup must be > 0" = npergroup > 0)
   if (!is.null(seed)) stopifnot("seed must be > 0" = seed > 0)
   
-  1-multp((sqrt(npergroup/2)*dif)/sd,ngroups-1,0.5, seed)
+  multp((sqrt(npergroup/2)*dif)/sd, ngroups-1, 0.5, seed = seed)
 }
